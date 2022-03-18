@@ -13,12 +13,10 @@
                 @if ($errors->first('email'))
                     <div class="alert alert-danger">
                         <ul>
-                        <ul>
                             @foreach ($errors->get('email') as $message) 
                                 <li>{{ $message }}</li>
                             
                             @endforeach
-                        </ul>
                         </ul>
                     </div>
                 @endif

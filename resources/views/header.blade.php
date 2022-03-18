@@ -1,5 +1,12 @@
+<?php
+use App\Http\Controllers\ProjectController;
+$total=0;
+if(Session::has('user')){
+  $total = ProjectController::favouriteItem();
+}
+?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="/">SBASSAWS</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -24,11 +31,27 @@
       <li class="nav-item active">
         <a class="nav-link" href="#">About Us</a>
       </li>
+     
     </ul>
     <ul class="navbar-nav justify-content-end">
     <li class="nav-item active">
-        <a class="nav-link" href="#">Announcements</a>
+        <a class="nav-link" href="#">Favourites({{$total}})</a>
       </li>
+
+      @if(Session::has('user'))
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{Session::get('user')['name']}}
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </li>
+      @else
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Login</a>
+      </li>
+      @endif
     </ul>
   </div>
 </nav>

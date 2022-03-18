@@ -9,12 +9,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     function login(Request $req){
-        $req->validate([
-            'email' => 'required|max:15',
-            'password' => 'required|min:5'
-
-        ]);
-
+        
         $u = User::where(['email'=>$req->email])->first();
         if(!$u || !Hash::check($req->password, $u->password)){
             return "Username or password incorrect";
