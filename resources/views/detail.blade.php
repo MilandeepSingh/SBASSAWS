@@ -12,13 +12,17 @@
             <h3>Status: {{$project['status']}}</h3>
             <h4>Details: {{$project['description']}}</h4>
             <br><br>
-            <form action="/add_to_favourites" method="POST">
+            <form action="/add_to_favourites" method="POST" style="float:left">
                 @csrf
-                <input type="hidden" name="product_id" value={{$project['id']}}>
+                <input type="hidden" name="project_id" value={{$project['id']}}>
+            @if ($isthere==0)
             <button class='btn btn-primary'>Add to favourites</button>
+            @else
+            <button class='btn btn-primary' disabled>Already a favourite</button>
+            @endif
             </form>
-            <br><br>
-            <button class='btn btn-success'>Provide suggestions/feedback</button>
+
+            <button style="margin-left: 50px;" class='btn btn-success'>Provide suggestions/feedback</button>
             <br><br>
         </div>
     </div>

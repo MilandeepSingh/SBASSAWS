@@ -31,10 +31,9 @@ class UserController extends Controller
             ),
             'password' => 'required|min:6|max:15',
             'village' => 'required|min:3|max:30',
-            'password1' => 'required'
-            
-
+            'password1' => 'required|same:password'
         ]);
+        
         return $req -> input();
     }
 }

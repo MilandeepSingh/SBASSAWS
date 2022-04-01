@@ -4,6 +4,7 @@ $total=0;
 if(Session::has('user')){
   $total = ProjectController::favouriteItem();
 }
+use App\Http\Controllers\DonateController;
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/">SBASSAWS</a>
@@ -14,7 +15,7 @@ if(Session::has('user')){
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/home">Home</a>
+        <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="#">Gallery</a>
@@ -26,7 +27,7 @@ if(Session::has('user')){
         <a class="nav-link" href="#">Hisab Kitab</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Donate</a>
+        <a class="nav-link" href="/donate">Donate</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="#">About Us</a>
@@ -35,7 +36,7 @@ if(Session::has('user')){
     </ul>
     <ul class="navbar-nav justify-content-end">
     <li class="nav-item active">
-        <a class="nav-link" href="#">Favourites({{$total}})</a>
+        <a class="nav-link" href="/favouriteslist">Favourites({{$total}})</a>
       </li>
 
       @if(Session::has('user'))
@@ -44,12 +45,13 @@ if(Session::has('user')){
           {{Session::get('user')['name']}}
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/donationslist">My Donations</a>
           <a class="dropdown-item" href="/logout">Logout</a>
         </div>
       </li>
       @else
       <li class="nav-item active">
-        <a class="nav-link" href="#">Login</a>
+        <a class="nav-link" href="/login">Login</a>
       </li>
       @endif
     </ul>

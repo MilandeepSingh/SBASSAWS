@@ -17,14 +17,17 @@ class UserAuth
     public function handle(Request $request, Closure $next)
     {
         if ($request->path() == 'login' && $request->isMethod('post')){
+            
             $request->validate([
-                'email' => 'required|max:15',
+                'email' => 'required|email',
                 'password' => 'required|min:5'
             ]);
         }
+
         if ($request->path() == 'login' && $request->session()->has('user')){
             return redirect('/');
         }
+
         return $next($request);
     }
 }
