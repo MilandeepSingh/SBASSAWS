@@ -2,9 +2,6 @@
 @section('content')
 
 <div class="custom-project">
-    
-
-
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         @foreach($projects as $item)
@@ -15,7 +12,7 @@
         @foreach($projects as $item)
             <div class="carousel-item {{$item['id']==$projects[0]['id']?'active':''}}">
                 <a href="detail/{{$item['id']}}">
-                <img class="d-block w-100 slider-img" style="background-image: radial-gradient(#0000 85%, #333), url({{$item['gallery']}})">
+                <img class="d-block w-100 slider-img" style="background-image: linear-gradient(to right, #333 0, #0000 3%, #0000 97%, #333 100%), url({{$item['gallery']}}); width:100%; height:100%; background-size: cover;">
                 <div class="carousel-caption d-none d-md-block slider-text">
                     
                     <h3>{{$item["name"]}}</h3>
@@ -36,21 +33,28 @@
 </div>
 
 
-    <div class="trending-wrapper">
-        <h3>Trending Projects</h3>
-        @foreach($projects as $item)
+
+
+<div class="container" align='center' style="width:100%;">
+<h3 style="border: 4px outset green; width:300px; text-align:center; margin-top:15px; margin-bottom: 15px;">Recent Projects</h3>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5" >
+   @foreach($projects as $item)
+  <div class="col mb-4">
             <div class="trending-item">
             <a href="detail/{{$item['id']}}">
-                <img class="trending-image w-75" src = "{{$item['gallery']}}">
-                <div class="">
-                    <h4>{{$item["name"]}}</h4>
-                </div>
-</a>
+            <div class="card trending-image">
+            <img class="card-img-top trending-image" style="width:90%; margin-left:5%; height: 80px; margin-top:10px;" src="{{$item['gallery']}}" alt="Card image cap">
+            <div class="card-body">
+                <p class="card-text" style="text-align:center; color:#000;"><b>{{$item['name']}}</b></p>
             </div>
-        @endforeach
-    </div>
-    
-    
+            </div>
+            </a>
+            </div>
+        
+  </div>
+  @endforeach
+ 
 </div>
-
+</div>
 @endsection

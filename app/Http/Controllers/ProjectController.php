@@ -42,7 +42,7 @@ class ProjectController extends Controller
             return redirect('/');
         }
         else{
-            return redirect('login');
+            return view('login', ['need' => "You need to login first."]);
         }
     }
 
@@ -52,6 +52,9 @@ class ProjectController extends Controller
     }
 
     function favouritesList(){
+        if (!Session::has('user')){
+            return view('login', ['need' => "You need to login first."]);
+        }
         $userId = Session::get('user')['id'];
         $projects = DB::table('favourites')
         ->join('projects', 'favourites.project_id', '=', 'projects.id')

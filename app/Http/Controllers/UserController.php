@@ -12,7 +12,7 @@ class UserController extends Controller
         
         $u = User::where(['email'=>$req->email])->first();
         if(!$u || !Hash::check($req->password, $u->password)){
-            return "Username or password incorrect";
+            return view('login', ['err'=>"Username or password incorrect"]);
         }
         else{
             $req->session()->put('user', $u);
@@ -20,20 +20,17 @@ class UserController extends Controller
         }
     }
 
-    function register(Request $req){
-        $req->validate([
-            'name' => 'required|min:4|max:35|alpha',
-            'email' => 'required',
-            'mobile' => 
-            array(
-                'required',
-                'regex:/^[0-9]{6, 15}/$'
-            ),
-            'password' => 'required|min:6|max:15',
-            'village' => 'required|min:3|max:30',
-            'password1' => 'required|same:password'
-        ]);
-        
-        return $req -> input();
+    function signUp(Request $req){
+        if (User::where('email', '=', $req->email)->exists()) {
+            return view('test')->with(['ohh'=>true]);
+        }
+        $user = new User;
+        $user->name = $req->name;
+        $user->email = $req->email;
+        $user->password = Hash::make($req->password);
+        $user->village = $req->village;
+        $user->mobile = $req->mobile;
+        $user->save();
+        return $this->login($req);
     }
 }

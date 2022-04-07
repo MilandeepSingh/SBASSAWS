@@ -1,7 +1,7 @@
 @extends('layout.master')
 @section('content')
 
-<div class="custom-project">
+<div class="custom-project" style="margin-bottom: 80px">
 
     <div class="col-sm-6 offset-sm-3">
         <h2 style="text-align: center; margin-top:30px; margin-bottom: 30px;">Donate for the good cause!!</h2>
@@ -11,6 +11,15 @@
     <label class="col-sm-2 col-form-label">Amount(in INR)</label>
     <div class="col-sm-10">
       <input type="number" class="form-control" name="amount"  placeholder="Enter the donation amount.">
+      @if ($errors->first('amount'))
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->get('amount') as $message) 
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+        </div>
+      @endif
     </div>
   </div>
   <div class="form-group row">
@@ -26,35 +35,18 @@
         <div class="form-check">
           <input class="form-check-input" type="radio" name="payment" value="option1" checked>
           <label class="form-check-label" for="gridRadios1">
-            First radio
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="payment" value="option2">
-          <label class="form-check-label" for="gridRadios2">
-            Second radio
+            By Cash
           </label>
         </div>
         <div class="form-check disabled">
           <input class="form-check-input" type="radio" name="payment" value="option3" disabled>
           <label class="form-check-label" for="gridRadios3">
-            Third disabled radio
+            Online(Yet to be implemented)
           </label>
         </div>
       </div>
     </div>
   </fieldset>
-  <div class="form-group row">
-    <div class="col-sm-2">Checkbox</div>
-    <div class="col-sm-10">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck1">
-        <label class="form-check-label" for="gridCheck1">
-          Example checkbox
-        </label>
-      </div>
-    </div>
-  </div>
  <div class="form-group row">
     <div class="col-sm-2 offset-sm-5">
       <button type="submit" class="btn btn-primary">Donate</button>

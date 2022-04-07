@@ -17,10 +17,37 @@ class UserAuth
     public function handle(Request $request, Closure $next)
     {
         if ($request->path() == 'login' && $request->isMethod('post')){
-            
+
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required|min:5'
+            ]);
+        }
+
+        if ($request->path() == 'donatefinal' && $request->isMethod('post')){
+            
+            $request->validate([
+                'amount' => 'required|numeric|min:10'
+            ]);
+        }
+
+        if ($request->path() == 'signup' && $request->isMethod('post')){
+            
+            $request->validate([
+                'name' => array(
+                    'required',
+                    'Regex:/^[A-Za-z ]+$/',
+                    'min:3',
+                    'max:35'
+                ),
+                'email' => 'required|email',
+                'mobile' => array(
+                    'required',
+                    'digits_between:6,15'
+                ),
+                'password' => 'required|min:6|max:15',
+                'village' => 'required|min:3|max:30',
+                'confirm_password' => 'required|same:password'
             ]);
         }
 

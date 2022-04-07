@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use App\Models\Donation;
 use Session;
 use Illuminate\Support\Facades\DB;
+use Mail;
+
 
 class DonateController extends Controller
 {
@@ -22,11 +24,12 @@ class DonateController extends Controller
             $donation->amount = $req->amount;
             $donation->suggestions = $req->suggestions;
             $donation->save();
-            return $donation->all();
-            return redirect('/mypayments');
+            $this->sendMail($req->amount);
+            Session::put('justDonated', true);
+            return redirect('/donationslist');
         }
         else{
-            return redirect('/login');
+            return view('login', ['need' => "You need to login first."]);;
         }        
     }
 
@@ -36,8 +39,27 @@ class DonateController extends Controller
                     ->sum('donations.amount');
         $info = DB::table('donations')->where('donations.user_id', $user_id)
                     ->select('donations.amount', 'donations.suggestions', 'donations.date')
-                    ->orderBy('date', 'desc')
+                    ->orderBy('created_at', 'desc')
                     ->get();
-        return view('donationslist', ['info'=>$info, 'total'=>$total]);
+        
+        return view('donationslist', ['total'=>$total, 'info'=>$info]);
+    }
+
+
+    public function sendMail($amount){
+        $user['to']=Session::get('user')['email'];
+        $user['sub']='Thank you for donating...';
+        $user_id = Session::get('user')['id'];
+        $total = DB::table('donations')->where('donations.user_id', $user_id)
+                    ->sum('donations.amount');
+        $info = DB::table('donations')->where('donations.user_id', $user_id)
+                    ->select('donations.amount', 'donations.suggestions', 'donations.date')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+        $data=['name'=>Session::get('user')['name'], "total"=>$total, 'info'=>$info, 'amount'=>$amount];
+        Mail::send('donationslist', $data, function($messages) use($user){
+            $messages->to($user['to']);
+            $messages->subject($user['sub']);
+        });
     }
 }

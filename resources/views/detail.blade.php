@@ -1,18 +1,40 @@
 @extends('layout.master')
 @section('content')
 
+<style>
+    th, td{
+        padding: 10px;
+        vertical-align: top;
+    }
+
+</style>
+
 <div class="container">
     <div class="row">
-        <div class="col-sm-6">
-            <img class = "detail-img" src="{{$project['gallery']}}" alt="">
+        <div class="col">
+            <div class="img-thumbnail" style="text-align:center; margin-top:16%;">
+                <img class = "detail-img" src="{{$project['gallery']}}" alt="">
+            </div>
         </div>
-        <div class="col-sm-6">
+
+        <div class="col" style="margin-top:50px; min-width:300px;">
             <a href="/">Go Back</a>
-            <h2>{{$project['name']}}</h2>
-            <h3>Status: {{$project['status']}}</h3>
-            <h4>Details: {{$project['description']}}</h4>
+            <table>
+                <tr>
+                    <th>Name:</th>
+                    <td>{{$project['name']}}</td>
+                </tr>
+                <tr>
+                    <th>Status:</th>
+                    <td>{{$project['status']}}</td>
+                </tr>
+                <tr>
+                    <th>Description:</th>
+                    <td>{{$project['description']}}</td>
+                </tr>
+            </table>
             <br><br>
-            <form action="/add_to_favourites" method="POST" style="float:left">
+            <form action="/add_to_favourites" method="POST">
                 @csrf
                 <input type="hidden" name="project_id" value={{$project['id']}}>
             @if ($isthere==0)
@@ -22,7 +44,7 @@
             @endif
             </form>
 
-            <button style="margin-left: 50px;" class='btn btn-success'>Provide suggestions/feedback</button>
+            <!-- <button style="margin-left: 50px;" class='btn btn-success'>Provide suggestions/feedback</button> -->
             <br><br>
         </div>
     </div>

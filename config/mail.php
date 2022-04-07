@@ -45,6 +45,13 @@ return [
             'auth_mode' => null,
         ],
 
+        'mailgun' => [
+            'domain' => env('MAILGUN_DOMAIN'),
+            'secret' => env('MAILGUN_SECRET'),
+        ],
+
+        'from' => ['address' => 'milandeepsinghbaddon@gmail.com', 'name' => 'smtp'],
+
         'ses' => [
             'transport' => 'ses',
         ],
